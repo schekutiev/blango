@@ -39,8 +39,10 @@ class Dev(Configuration):
     SESSION_COOKIE_SAMESITE = 'None'
 
     # Application definition
+    AUTH_USER_MODEL = "blango_auth.User"
 
     INSTALLED_APPS = [
+        'blango_auth.apps.BlangoAuthConfig',
         'blog.apps.BlogConfig',
         'django.contrib.admin',
         'django.contrib.auth',
