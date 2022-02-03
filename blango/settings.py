@@ -16,9 +16,8 @@ from configurations import values
 
 
 class Dev(Configuration):
-    #Bu ild paths inside the project like this: BASE_DIR / 'subdir'.
+    # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
-
 
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -28,15 +27,19 @@ class Dev(Configuration):
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = values.BooleanValue(True)
+    ALLOWED_HOSTS = ['*']
 
-    ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
-    X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
-    CSRF_COOKIE_SAMESITE = None
-    CSRF_TRUSTED_ORIGINS = [os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io']
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SAMESITE = 'None'
-    SESSION_COOKIE_SAMESITE = 'None'
+    # * Codio related settings
+    # ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
+    # X_FRAME_OPTIONS = 'ALLOW-FROM ' + \
+    #     os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
+    # CSRF_COOKIE_SAMESITE = None
+    # CSRF_TRUSTED_ORIGINS = [os.environ.get(
+    #     'CODIO_HOSTNAME') + '-8000.codio.io']
+    # CSRF_COOKIE_SECURE = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SAMESITE = 'None'
+    # SESSION_COOKIE_SAMESITE = 'None'
 
     # Application definition
     AUTH_USER_MODEL = "blango_auth.User"
@@ -88,12 +91,11 @@ class Dev(Configuration):
 
     WSGI_APPLICATION = 'blango.wsgi.application'
 
-
     # Database
     # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
     DATABASES = values.DatabaseURLValue(f"sqlite:///{BASE_DIR}/db.sqlite3")
-    
+
     PASSWORD_HASHERS = [
         'django.contrib.auth.hashers.Argon2PasswordHasher',
         'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -119,7 +121,6 @@ class Dev(Configuration):
         },
     ]
 
-
     # Internationalization
     # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -133,7 +134,6 @@ class Dev(Configuration):
     USE_L10N = True
 
     USE_TZ = True
-
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -186,6 +186,7 @@ class Dev(Configuration):
             "level": "DEBUG",
         }
     }
+
 
 class Prod(Dev):
     DEBUG = values.BooleanValue(False)
