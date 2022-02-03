@@ -4,8 +4,10 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
 
+
 class Comment(models.Model):
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(db_index=True)
@@ -25,7 +27,8 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     published_at = models.DateTimeField(blank=True, null=True, db_index=True)

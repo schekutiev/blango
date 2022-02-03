@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags blog_extras %}
+{% block title %}Activation Failed{% endblock %}
+{% block content %}
+{% row "justify-content-center" %}
+    {% col "col-md-6" %}
+        <h2>Activation Failed</h2>
+        <p>Sorry, we couldn't activate your account.</p>
+        <p>{{ activation_error.message }}</p>
+    {% endcol %}
+{% endrow %}
+code: The failure exception code, a string.<br/>
+message: A message/description of the exception.<br/>
+already_activated: Indicates the account has already been activated.<br/>
+bad_username: Indicates the username decoded from the activation key is invalid (does not correspond to any user account).<br/>
+expired: Indicates the account/activation key has expired.<br/>
+invalid_key: Generic indicator that the activation key was invalid.
+{% endblock %}
