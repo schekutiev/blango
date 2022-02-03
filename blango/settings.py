@@ -27,7 +27,7 @@ class Dev(Configuration):
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = values.BooleanValue(True)
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = values.ListValue(['localhost', '127.0.0.1', '0.0.0.0'])
 
     # * Codio related settings
     # ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
@@ -69,7 +69,7 @@ class Dev(Configuration):
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     ]
 
-    INTERNAL_IPS = ['192.168.10.93']
+    INTERNAL_IPS = ['127.0.0.1']
 
     ROOT_URLCONF = 'blango.urls'
 
