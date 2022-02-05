@@ -32,6 +32,9 @@ urlpatterns = [
     path('accounts/register/', RegistrationView.as_view(form_class=BlangoRegistrationForm),
          name='django_registration_register'),
     path('accounts/', include("django_registration.backends.activation.urls")),
+
+    # First-Party Django REST API
+    path("api/v1/", include("blog.api_urls")),
 ]
 if settings.DEBUG:
     urlpatterns += [
