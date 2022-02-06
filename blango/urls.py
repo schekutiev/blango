@@ -34,7 +34,7 @@ urlpatterns = [
     path('accounts/', include("django_registration.backends.activation.urls")),
 
     # First-Party Django REST API
-    path("api/v1/", include("blog.api_urls")),
+    path("api/v1/", include("blog.api.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += [
