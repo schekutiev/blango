@@ -60,6 +60,7 @@ class Dev(Configuration):
         'crispy_bootstrap5',
         'debug_toolbar',
         'rest_framework',
+        'rest_framework.authtoken',
     ]
 
     MIDDLEWARE = [
@@ -76,6 +77,14 @@ class Dev(Configuration):
     INTERNAL_IPS = ['127.0.0.1']
 
     ROOT_URLCONF = 'blango.urls'
+
+    REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        ]
+    }
 
     TEMPLATES = [
         {
