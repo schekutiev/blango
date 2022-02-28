@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from blog.models import Post, Tag, Comment
 from blango_auth.models import User
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -20,8 +21,8 @@ class TagField(serializers.SlugRelatedField):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        # We’re including just a subset of fields, 
-        # because there’s sensitive data like the password hash 
+        # We’re including just a subset of fields,
+        # because there’s sensitive data like the password hash
         # which we don’t want to include.
         fields = ["first_name", "last_name", "email"]
 
@@ -38,31 +39,49 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     tags = serializers.SlugRelatedField(
-        slug_field="value", 
-        many=True, 
+        slug_field="value",
+        many=True,
         queryset=Tag.objects.all(),
     )
 
     author = serializers.HyperlinkedRelatedField(
-        queryset=User.objects.all(), 
-        view_name="api_user_detail", 
+        queryset=User.objects.all(),
+        view_name="api_user_detail",
         lookup_field="email",
+    )
+
+    hero_image = VersatileImageFieldSerializer(
+        sizes=[
+            ("full_size", "url"),
+            ("thumbnail", "thumbnail__100x100"),
+        ],
+        read_only=True,
     )
 
     class Meta:
         model = Post
-        fields = "__all__"
+        exclude = ["ppoi"]
         readonly = ["modified_at", "created_at"]
-        
+
 # The Post API won’t work now, until we have added the api_user_detail view
+
 
 class PostDetailSerializer(PostSerializer):
     comments = CommentSerializer(many=True)
+    hero_image = VersatileImageFieldSerializer(
+        sizes=[
+            ("full_size", "url"),
+            ("thumbnail", "thumbnail__100x100"),
+            ("square_crop", "crop__200x200"),
+        ],
+        read_only=True,
+    )
 
     def update(self, instance, validated_data):
         comments = validated_data.pop("comments")
 
-        instance = super(PostDetailSerializer, self).update(instance, validated_data)
+        instance = super(PostDetailSerializer, self).update(
+            instance, validated_data)
 
         for comment_data in comments:
             if comment_data.get("id"):

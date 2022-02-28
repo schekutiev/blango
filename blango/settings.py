@@ -27,19 +27,19 @@ class Dev(Configuration):
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = values.BooleanValue(True)
-    # ALLOWED_HOSTS = values.ListValue(['localhost', '127.0.0.1', '0.0.0.0'])
+    ALLOWED_HOSTS = values.ListValue(['localhost', '127.0.0.1', '0.0.0.0'])
 
     # * Codio related settings
-    ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
-    X_FRAME_OPTIONS = 'ALLOW-FROM ' + \
-        os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
-    CSRF_COOKIE_SAMESITE = None
-    CSRF_TRUSTED_ORIGINS = [os.environ.get(
-        'CODIO_HOSTNAME') + '-8000.codio.io']
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SAMESITE = 'None'
-    SESSION_COOKIE_SAMESITE = 'None'
+    # ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
+    # X_FRAME_OPTIONS = 'ALLOW-FROM ' + \
+    #     os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
+    # CSRF_COOKIE_SAMESITE = None
+    # CSRF_TRUSTED_ORIGINS = [os.environ.get(
+    #     'CODIO_HOSTNAME') + '-8000.codio.io']
+    # CSRF_COOKIE_SECURE = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SAMESITE = 'None'
+    # SESSION_COOKIE_SAMESITE = 'None'
 
     # Application definition
     AUTH_USER_MODEL = "blango_auth.User"
@@ -62,6 +62,7 @@ class Dev(Configuration):
         'rest_framework',
         'rest_framework.authtoken',
         'drf_yasg',
+        'versatileimagefield',
     ]
 
     MIDDLEWARE = [
@@ -80,26 +81,26 @@ class Dev(Configuration):
     ROOT_URLCONF = 'blango.urls'
 
     REST_FRAMEWORK = {
-      "DEFAULT_AUTHENTICATION_CLASSES": [
-          "rest_framework.authentication.BasicAuthentication",
-          "rest_framework.authentication.SessionAuthentication",
-          "rest_framework.authentication.TokenAuthentication",
-      ],
-      "DEFAULT_PERMISSION_CLASSES": [
-          "rest_framework.permissions.IsAuthenticatedOrReadOnly",
-      ],
-      "DEFAULT_THROTTLE_CLASSES": [
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.BasicAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+            "rest_framework.authentication.TokenAuthentication",
+        ],
+        "DEFAULT_PERMISSION_CLASSES": [
+            "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        ],
+        "DEFAULT_THROTTLE_CLASSES": [
             "blog.api.throttling.AnonSustainedThrottle",
             "blog.api.throttling.AnonBurstThrottle",
             "blog.api.throttling.UserSustainedThrottle",
             "blog.api.throttling.UserBurstThrottle",
-      ],
-      "DEFAULT_THROTTLE_RATES": {
+        ],
+        "DEFAULT_THROTTLE_RATES": {
             "anon_sustained": "500/day",
             "anon_burst": "10/minute",
             "user_sustained": "5000/day",
             "user_burst": "100/minute",
-      },
+        },
     }
 
     TEMPLATES = [
@@ -175,6 +176,9 @@ class Dev(Configuration):
     # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
     STATIC_URL = '/static/'
+
+    MEDIA_ROOT = BASE_DIR / "media"
+    MEDIA_URL = "/media/"
 
     # Default primary key field type
     # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
