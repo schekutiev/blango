@@ -27,19 +27,19 @@ class Dev(Configuration):
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = values.BooleanValue(True)
-    ALLOWED_HOSTS = values.ListValue(['localhost', '127.0.0.1', '0.0.0.0'])
+    # ALLOWED_HOSTS = values.ListValue(['localhost', '127.0.0.1', '0.0.0.0'])
 
     # * Codio related settings
-    # ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
-    # X_FRAME_OPTIONS = 'ALLOW-FROM ' + \
-    #     os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
-    # CSRF_COOKIE_SAMESITE = None
-    # CSRF_TRUSTED_ORIGINS = [os.environ.get(
-    #     'CODIO_HOSTNAME') + '-8000.codio.io']
-    # CSRF_COOKIE_SECURE = True
-    # SESSION_COOKIE_SECURE = True
-    # CSRF_COOKIE_SAMESITE = 'None'
-    # SESSION_COOKIE_SAMESITE = 'None'
+    ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
+    X_FRAME_OPTIONS = 'ALLOW-FROM ' + \
+        os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
+    CSRF_COOKIE_SAMESITE = None
+    CSRF_TRUSTED_ORIGINS = [os.environ.get(
+        'CODIO_HOSTNAME') + '-8000.codio.io']
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = 'None'
+    SESSION_COOKIE_SAMESITE = 'None'
 
     # Application definition
     AUTH_USER_MODEL = "blango_auth.User"
@@ -62,6 +62,7 @@ class Dev(Configuration):
         'rest_framework',
         'rest_framework.authtoken',
         'drf_yasg',
+        'django_filters',
         'versatileimagefield',
     ]
 
@@ -101,6 +102,12 @@ class Dev(Configuration):
             "user_sustained": "5000/day",
             "user_burst": "100/minute",
         },
+        "DEFAULT_FILTER_BACKENDS": [
+            "django_filters.rest_framework.DjangoFilterBackend",
+            "rest_framework.filters.OrderingFilter",
+        ],
+        "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+        "PAGE_SIZE": 100,
     }
 
     TEMPLATES = [
