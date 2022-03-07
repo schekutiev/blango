@@ -1,9 +1,49 @@
-const theNumber = 1
-// let name = 'Ben'
+class Greeter {
+  constructor (name) {
+    this.name = name
+  }
 
-if (theNumber === 1) {
-  name = 'Leo'
-  alert(name)
+  getGreeting () {
+    if (this.name === undefined) {
+      return 'Hello, no name'
+    }
+
+    return 'Hello, ' + this.name
+  }
+
+  showGreeting (greetingMessage) {
+    console.log(greetingMessage)
+  }
+
+  greet () {
+    this.showGreeting(this.getGreeting())
+  }
 }
 
-alert(name)
+const g = new Greeter('PUTIN')  // Put your name here if you like
+g.greet()
+
+class DelayedGreeter extends Greeter {
+  delay = 2000
+
+  constructor (name, delay) {
+    super(name)
+    if (delay !== undefined) {
+      this.delay = delay
+    }
+  }
+
+  greet () {
+    setTimeout(
+      () => {
+        this.showGreeting(this.getGreeting())
+      }, this.delay
+    )
+  }
+}
+
+const dg2 = new DelayedGreeter('PUTIN 2 Seconds')
+dg2.greet()
+
+const dg1 = new DelayedGreeter('PUTIN 1 Second', 1000)
+dg1.greet()
